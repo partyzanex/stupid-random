@@ -8,10 +8,10 @@ import (
 )
 
 func TestNew(t *testing.T) {
-	s := stupidrandom.New()
-	s.Add(1, 2.0/10)
-	s.Add(2, 3.0/10)
-	s.Add(3, 5.0/10)
+	p := stupidrandom.New()
+	p.Add(1, 2.0/10)
+	p.Add(2, 3.0/10)
+	p.Add(3, 5.0/10)
 
 	results := map[int]int{
 		1: 0,
@@ -19,7 +19,7 @@ func TestNew(t *testing.T) {
 		3: 0,
 	}
 	for i := 0; i < 1000; i++ {
-		r := s.Get().(int)
+		r := p.Get().(int)
 		results[r]++
 	}
 
@@ -29,11 +29,11 @@ func TestNew(t *testing.T) {
 }
 
 func TestSpreader_Get(t *testing.T) {
-	s := stupidrandom.New()
-	s.Add(1, 2.0/10)
-	s.Add(2, 3.0/10)
-	s.Add(3, 5.0/10)
-	s.Add(7, 5.0/20)
+	p := stupidrandom.New()
+	p.Add(1, 2.0/10)
+	p.Add(2, 3.0/10)
+	p.Add(3, 5.0/10)
+	p.Add(7, 5.0/20)
 
 	n := 5
 	wg := &sync.WaitGroup{}
@@ -44,7 +44,7 @@ func TestSpreader_Get(t *testing.T) {
 			defer wg.Done()
 
 			for j := 0; j < 10000; j++ {
-				_ = s.Get()
+				_ = p.Get()
 			}
 		}()
 	}
