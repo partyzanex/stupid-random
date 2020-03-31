@@ -13,12 +13,14 @@ type Propagator struct {
 	stack, chances, diff []float32
 	values               []interface{}
 
-	mx sync.Mutex
+	mx *sync.Mutex
 }
 
 func New() *Propagator {
 	rand.Seed(time.Now().UnixNano())
-	return &Propagator{}
+	return &Propagator{
+		mx: &sync.Mutex{},
+	}
 }
 
 func (p *Propagator) Add(value interface{}, chance float32) {

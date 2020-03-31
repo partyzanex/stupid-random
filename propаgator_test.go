@@ -61,7 +61,15 @@ func BenchmarkSpreader_Get(b *testing.B) {
 	s.Add(11, 1.0/14)
 	s.Add(23, 1.0/15)
 
+	b.ResetTimer()
+
 	for i := 0; i < b.N; i++ {
-		_ = s.Get()
+		_, ok := s.Get().(int)
+
+		b.StopTimer()
+		if !ok {
+			b.Fatal()
+		}
+		b.StartTimer()
 	}
 }
